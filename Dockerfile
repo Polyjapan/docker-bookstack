@@ -1,15 +1,10 @@
 FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.12
 
 # set version label
-ARG BUILD_DATE
-ARG VERSION
-ARG BOOKSTACK_RELEASE
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="homerr"
+LABEL build_version="Linuxserver.io/forked version"
+LABEL maintainer="Ceyal"
 
 # package versions
-ARG BOOKSTACK_RELEASE
-
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache  \
@@ -30,6 +25,7 @@ RUN \
 	php7-phar \
 	php7-simplexml \
 	php7-tokenizer \
+	php7-tidy \
 	qt5-qtbase \
 	tar \
 	ttf-freefont \
@@ -45,13 +41,9 @@ RUN \
  echo "**** fetch bookstack ****" && \
  mkdir -p\
 	/var/www/html && \
- if [ -z ${BOOKSTACK_RELEASE+x} ]; then \
-	BOOKSTACK_RELEASE=$(curl -sX GET "https://api.github.com/repos/bookstackapp/bookstack/releases/latest" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]'); \
- fi && \
  curl -o \
  /tmp/bookstack.tar.gz -L \
-	"https://github.com/BookStackApp/BookStack/archive/${BOOKSTACK_RELEASE}.tar.gz" && \
+	"https://github.com/PolyJapan/BookStack/archive/master.tar.gz" && \
  tar xf \
  /tmp/bookstack.tar.gz -C \
 	/var/www/html/ --strip-components=1 && \
