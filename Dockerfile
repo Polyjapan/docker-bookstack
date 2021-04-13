@@ -1,6 +1,7 @@
 FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.12
 
 # set version label
+ARG branch=master
 LABEL build_version="Linuxserver.io/forked version"
 LABEL maintainer="Ceyal"
 
@@ -43,7 +44,7 @@ RUN \
 	/var/www/html && \
  curl -o \
  /tmp/bookstack.tar.gz -L \
-	"https://github.com/PolyJapan/BookStack/archive/master.tar.gz" && \
+	"https://github.com/PolyJapan/BookStack/archive/${branch}.tar.gz" && \
  tar xf \
  /tmp/bookstack.tar.gz -C \
 	/var/www/html/ --strip-components=1 && \
